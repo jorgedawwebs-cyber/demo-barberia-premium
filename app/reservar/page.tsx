@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -35,7 +35,7 @@ const timeSlots = [
   "18:00", "18:30", "19:00", "19:30",
 ];
 
-export default function ReservarPage() {
+function ReservarContent() {
   const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -710,6 +710,14 @@ export default function ReservarPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function ReservarPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: "100vh", background: "#0a0a0a" }} />}>
+      <ReservarContent />
+    </Suspense>
   );
 }
 
